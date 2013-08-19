@@ -13,6 +13,7 @@ There are two scripts here. One is for importing into GitHub Issues from a CSV f
 
 ###Documentation (The stuff you actually care about)
 
+
 #####CSV issues into GitHub
 
 There are two ways to use this. You use it interactively (the default) or you can hard-code your information into the script. If you want to switch, you need to comment out the former and un-comment the latter. 
@@ -41,6 +42,17 @@ This allows you to create a CSV file from issues in a repo. This, too, can be do
 You can also export only a specific milestone if you give it a milestone. If you don't provide a milestone, it will print all issues.
 
 Note: It will put all labels in one column, without any delimiter. P-(
+
+
+###Features to add
+
+1. GUI: it would be great if this could be an icon on the desktop or in The Dock that a user could click and get a dialogue box with the input fields there.
+2. Key authentication: I don't know if that's an option, but that would negate the need for passwords entirely.
+3. Password obfuscation: I strongly dislike showing the password. If the above doesn't work, this would be better than nothing.
+4. Drop-down menus: (stretch goal) it'd be swanky if you ran it and it showed you the ogs and repos you have access to and let you choose that way.
+5. File picker: (stretch goal) it'd be swanky if, when importing, you ran it and it used the standard OSX file picker to choose your CSV file.
+
+
 
 ###Credits (The smart people who did the real work)
 It should be noted that I'm not much of a programmer, and I got a tremendous amount of help from [Vik](https://github.com/datvikash) and [Evan](https://github.com/evan108108)
