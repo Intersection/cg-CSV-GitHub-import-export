@@ -19,9 +19,14 @@ Make sure you have a GitHub account, that you know your username and password, a
 
 1. On the command line, cd to the directory where you keep your git repos.
 2. Enter `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
-3. If you expect to be using this tool often, consider adding it to your PATH. You can find guides on how to do this online, such as [this one](http://www.cyberciti.biz/faq/unix-linux-adding-path/).
+3. If you expect to be using these tools often, consider adding the directory to your PATH (you can find guides on how to do this online, such as [this one](http://www.cyberciti.biz/faq/unix-linux-adding-path/)) or moving the scripts to a directory already in your PATH.
+4. Run the script you want. Remember, if you don't add it to your path, you'll have to specify the path. If you have followed these directions exactly, then you can do this using the following
+	* `cd CSV-GitHub-import-export`
+	* `./csv_issues_to_github.rb` to import issues *into* GitHub from a CSV
+	* `./github_issues_to_csv.rb` to export issues *from* GitHub into a CSV
 
-#####CSV issues into GitHub
+
+#####Importing issues from into GitHub using csv_issues_to_github.rb
 
 There are two ways to use this. You use it interactively (the default) or you can hard-code your information into the script. If you want to switch, you need to comment out the former and un-comment the latter. 
 
@@ -41,7 +46,7 @@ Fields that have commas in them need to be in double quotes. (Some punctuation d
 Either way you use this, you will have to provide your GH password. If you use it interactively, it will show your password on the command line. P-(
 
 
-#####GitHub issues into CSV
+#####Exporting issues from GitHub to a CSV file using github_issues_to_csv.rb
 
 This allows you to create a CSV file from issues in a repo. This, too, can be done interactively or not. And it will also show your password if you use it interactively.
 
