@@ -26,7 +26,6 @@ You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub pag
 	* `./csv_issues_to_github.rb` to import issues *into* GitHub from a CSV
 	* `./github_issues_to_csv.rb` to export issues *from* GitHub into a CSV
 
-
 #####Importing issues from into GitHub using csv_issues_to_github.rb
 
 There are two ways to use this. You use it interactively (the default) or you can hard-code your information into the script. If you want to switch, you need to comment out the former and un-comment the latter. 
