@@ -17,6 +17,7 @@ There are two scripts here. One is for importing into GitHub Issues from a CSV f
 
 Make sure you have a GitHub account, that you know your username and password, and that you have access to the repository (repo) that you want to import to, or from which you wish to export.
 
+You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub page. If you want to do it using the command line, via ssh:
 1. On the command line, cd to the directory where you keep your git repos.
 2. Enter `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
 3. If you expect to be using these tools often, consider adding the directory to your PATH (you can find guides on how to do this online, such as [this one](http://www.cyberciti.biz/faq/unix-linux-adding-path/)) or moving the scripts to a directory already in your PATH.
@@ -39,7 +40,7 @@ The CSV file MUST be in the following format:
 You can add more labels or remove labels to it if you wish. However...
 
 **Important note**: all label fields need to be filled. So, if you know you have an issue with only one label, then you need to have only one label field. You do this by removing (or you can add) labels fields at the end of the script. The line for this is marked with a comment (currently it's line 66, but that could change.)
-This is a known deficiency that I would like to eventually fix. (But probably won't)  
+This is a known deficiency that will, with luck, eventually be fixed. 
 
 Fields that have commas in them need to be in double quotes. (Some punctuation doesn't require this, other punctuation may.)
 
