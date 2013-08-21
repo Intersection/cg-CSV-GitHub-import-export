@@ -68,6 +68,7 @@ csv = CSV.new(File.open(File.dirname(__FILE__) + "/" + OUTPUT_FILE + ".csv", 'w'
 puts "Initialising CSV file..."
 #CSV Headers
 header = [
+  "Issue number",
   "Title",
   "Description",
   "Date created",
@@ -75,7 +76,7 @@ header = [
   "Labels",
   "Milestone",
   "Status",
-  "Assigee",
+  "Assignee",
   "Reporter"
 ]
 
@@ -123,6 +124,7 @@ issues.each do |issue|
 	if ((TARGET_MILESTONE == "") || (milestone == TARGET_MILESTONE))
     # Needs to match the header order above, date format are based on Jira default
     row = [
+      issue['number'],
       issue['title'],
       issue['body'],
       DateTime.parse(issue['created_at']).new_offset(TIMEZONE_OFFSET).strftime("%d/%b/%y %l:%M %p"),
