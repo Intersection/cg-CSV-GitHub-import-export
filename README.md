@@ -18,6 +18,7 @@ There are two scripts here. One is for importing into GitHub Issues from a CSV f
 Make sure you have a GitHub account, that you know your username and password, and that you have access to the repository (repo) that you want to import to, or from which you wish to export.
 
 You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub page. If you want to do it using the command line, via ssh:
+
 1. On the command line, cd to the directory where you keep your git repos.
 2. Enter `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
 3. If you expect to be using these tools often, consider adding the directory to your PATH (you can find guides on how to do this online, such as [this one](http://www.cyberciti.biz/faq/unix-linux-adding-path/)) or moving the scripts to a directory already in your PATH.
