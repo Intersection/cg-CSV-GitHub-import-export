@@ -13,6 +13,13 @@ There are two scripts here. One is for importing into GitHub Issues from a CSV f
 
 ###Documentation (The stuff you actually care about)
 
+#####How to Use
+
+Make sure you have a GitHub account, that you know your username and password, and that you have access to the repository (repo) that you want to import to, or from which you wish to export.
+
+1. On the command line, cd to the directory where you keep your git repos.
+2. Enter `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
+3. If you expect to be using this tool often, consider adding it to your PATH. You can find guides on how to do this online, such as [this one](http://www.cyberciti.biz/faq/unix-linux-adding-path/).
 
 #####CSV issues into GitHub
 
@@ -20,7 +27,6 @@ There are two ways to use this. You use it interactively (the default) or you ca
 
 You will need to provide a CSV file to import.
 You will also need to provide it your GitHub username, your GitHub password, the name of your organization, and the name of your repository. If you're working on your own account on not as part of an org, the org is just your GitHub username.
-
 
 The CSV file MUST be in the following format:
 `title,description,assignee_username,label1,label2,label3`
@@ -43,14 +49,6 @@ You can also export only a specific milestone if you give it a milestone. If you
 
 Note: It will put all labels in one column, without any delimiter. P-(
 
-
-###Features to add
-
-1. GUI: it would be great if this could be an icon on the desktop or in The Dock that a user could click and get a dialogue box with the input fields there.
-2. Key authentication: I don't know if that's an option, but that would negate the need for passwords entirely.
-3. Password obfuscation: I strongly dislike showing the password. If the above doesn't work, this would be better than nothing.
-4. Drop-down menus: (stretch goal) it'd be swanky if you ran it and it showed you the ogs and repos you have access to and let you choose that way.
-5. File picker: (stretch goal) it'd be swanky if, when importing, you ran it and it used the standard OSX file picker to choose your CSV file.
 
 
 
