@@ -68,14 +68,14 @@ csv = CSV.new(File.open(File.dirname(__FILE__) + "/" + OUTPUT_FILE + ".csv", 'w'
 puts "Initialising CSV file..."
 #CSV Headers
 header = [
-  "Summary",
+  "Title",
   "Description",
   "Date created",
   "Date modified",
-  "Label (First)",
+  "Labels",
   "Milestone",
-  "Priority",
   "Status",
+  "Assigee",
   "Reporter"
 ]
 
@@ -98,24 +98,29 @@ begin
 	issues = issues + temp_issues;
 end while not temp_issues.empty?
  
- 
 puts "Processing #{issues.size} issues..."
 issues.each do |issue|
 
-labels = ""
-  label = issue['labels'] || "None"
-  if (label != "None")
-    label.each do |item|
-    	labels += item['name'] + " " 
-    end	
-  end
-	
-  milestone = issue['milestone'] || "None"
-  if (milestone != "None")
-    milestone = milestone['title']
-  end
+	labels = ""
+	label = issue['labels'] || "None"
+	if (label != "None")
+		label.each do |item|
+    		labels += item['name'] + " " 
+    	end	
+	end
+
+	assignee = ""
+	assignee = issue['assignee'] || "None"
+	if (assignee != "None")
+		assignee = assignee['login']
+	end	
+
+	milestone = issue['milestone'] || "None"
+	if (milestone != "None")
+		milestone = milestone['title']
+	end
  
-  if ((TARGET_MILESTONE == "") || (milestone == TARGET_MILESTONE))
+	if ((TARGET_MILESTONE == "") || (milestone == TARGET_MILESTONE))
     # Needs to match the header order above, date format are based on Jira default
     row = [
       issue['title'],
@@ -125,6 +130,7 @@ labels = ""
       labels,
       milestone,
       issue['state'],
+      assignee,
       issue['user']['login']
     ]
     csv << row
