@@ -10,6 +10,7 @@ Thus this repo.
 
 There are two scripts here. One is for importing into GitHub Issues from a CSV file. The other is for getting issues out of GitHub and into a CSV file. 
 
+NOTE: currently, if you have two-factor authentication on, you'll have to turn it off for this to work. Which is a pain.
 
 ###Documentation (The stuff you actually care about)
 
