@@ -19,7 +19,7 @@ Make sure you have a GitHub account, that you know your username and password, a
 
 You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub page to download the files. If you want to do it using the command line, via ssh, use `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
 
-You will also need to isntall [octokit](https://github.com/octokit/octokit.rb).  
+You will also need to install [octokit](https://github.com/octokit/octokit.rb).  
 
 
 
