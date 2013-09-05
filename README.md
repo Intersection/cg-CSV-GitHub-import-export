@@ -13,11 +13,14 @@ There are two scripts here. One is for importing into GitHub Issues from a CSV f
 
 ###Documentation (The stuff you actually care about)
 
-#####How to Use
+#####Getting Started
 
 Make sure you have a GitHub account, that you know your username and password, and that you have access to the repository (repo) that you want to import to, or from which you wish to export.
 
-You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub page. If you want to do it using the command line, via ssh, use `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
+You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub page to download the files. If you want to do it using the command line, via ssh, use `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
+
+You will also need to isntall [octokit](https://github.com/octokit/octokit.rb).  
+
 
 
 #####Importing issues from into GitHub using csv_issues_to_github.rb
