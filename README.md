@@ -27,7 +27,7 @@ You will also need to install [octokit](https://github.com/octokit/octokit.rb).
 
 
 
-#####Importing issues from into GitHub using csv_issues_to_github.rb
+#####Importing issues into GitHub using csv_issues_to_github.rb
 
 `./csv_issues_to_github.rb` to import issues *into* GitHub from a CSV
 
