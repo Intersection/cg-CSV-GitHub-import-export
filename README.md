@@ -2,7 +2,7 @@ Import-issues-to-GitHub-from-CSV
 ================================
 
 ###Caveat
-**You should use two-factor authentication for git**. 2FA breaks this script (it's beyond my coding skills to overcome that, at the moment). You have been warned.
+**This script is not yet compatible with github two-factor authentication. You can temporarily turn off 2FA or not use this.**. 2FA breaks this script (it's beyond my coding skills to overcome that, at the moment). 
 
 ###Intro (WTF is this?)
 Product Owners and Project Mangers _love_ spreadsheets! They want everything in spreadsheet form.
