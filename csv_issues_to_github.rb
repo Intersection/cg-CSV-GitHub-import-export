@@ -26,11 +26,11 @@ opts_parser = OptionParser.new do |opts|
   opts.separator "Specific options:"
 
   opts.on("-o", "--organization", "Define you repo's local") do |o|
-    options.organization << o
+    options.organization = o
   end
 
   opts.on("-r", "--repository", "Define you repo name") do |r|
-    options.repository << r
+    options.repository = r
   end
 
   opts.on("-u", "--username", "Your username") do |u|
@@ -46,7 +46,7 @@ opts_parser = OptionParser.new do |opts|
   end
 
   opts.on("-f", "--file", "CSV file") do |f|
-    options.file << f
+    options.file = f
   end
 
   opts.separator ""
