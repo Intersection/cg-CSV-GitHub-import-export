@@ -38,8 +38,7 @@ OptionParser.new do |opts|
   opts.on("-f", "--file", "CSV file") do |f|
     options[:file] << f
   end
-
-end.parse!
+end
 
 # END INTERACTIVE SECTION
 
@@ -61,6 +60,7 @@ if options.authkey == ""
 	client = Octokit::Client.new(:login => options.username, :password => options.password)
 else
 	client = Octokit::Client.new(:login => options.authkey)
+end
 
 csv_text = File.read(options.file)
 csv = CSV.parse(csv_text, :headers => true)
