@@ -61,7 +61,7 @@ opts_parser = OptionParser.new do |opts|
 
 end
 
-opt_parser.parse!(ARGV)
+opts_parser.parse!(ARGV)
 # END INTERACTIVE SECTION
 
 
