@@ -7,6 +7,7 @@ require 'octokit'
 require 'faraday'
 require 'csv'
 require 'optparse'
+require 'ostruct'
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
