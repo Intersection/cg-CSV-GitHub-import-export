@@ -6,39 +6,40 @@ require 'rubygems'
 require 'octokit'
 require 'faraday'
 require 'csv'
+require 'optparse'
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
 
-puts "Username:"
-username = gets.chomp  
-if username == ""
-	abort("You need to supply a username. Thank you, come again.")
-end
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
 
-puts "Password:"
-password = gets.chomp  
-if password == ""
-	abort("You need to supply a password. Thank you, come again.")
-end
+  opts.on("-o", "--organization", "Define you repo's local") do |o|
+    options[:organization] << o
+  end
 
-puts "Path for the CSV file you want to use?"
-input_file = gets.chomp  
-if input_file == ""
-	abort("You need to supply a CSV file. Thank you, come again.")
-end
+  opts.on("-r", "--repository", "Define you repo name") do |r|
+    options[:repository] << r
+  end
 
-puts "Organization?"
-org = gets.chomp  
-if org == ""
-	abort("You need to supply an organization. Thank you, come again.")
-end
+  opts.on("-u", "--username", "Your username") do |u|
+    options[:username] = u
+  end
 
-puts "Repository?"
-repo = gets.chomp  
-if repo == ""
-	abort("You need to supply a repository. Thank you, come again.")
-end
+  opts.on("-p", "--password", "Your password") do |u|
+    options[:password] = u
+  end
+
+  opts.on("-k", "--authkey", "Your 40 char token") do |k|
+    options[:authkey] = k
+  end
+
+  opts.on("-f", "--file", "CSV file") do |f|
+    options[:file] << f
+  end
+
+end.parse!
 
 # END INTERACTIVE SECTION
 
@@ -54,11 +55,14 @@ org = ""
 repo = ""
 =end  # END HARD-CODED SECTION
 
-org_repo = org + "/" + repo
+org_repo = options.organization + "/" + options.repository
 
-client = Octokit::Client.new(:login => username, :password => password)
+if options.authkey == ""
+	client = Octokit::Client.new(:login => options.username, :password => options.password)
+else
+	client = Octokit::Client.new(:login => options.authkey)
 
-csv_text = File.read(input_file)
+csv_text = File.read(options.file)
 csv = CSV.parse(csv_text, :headers => true)
 
 csv.each do |row|
