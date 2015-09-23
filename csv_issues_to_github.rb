@@ -82,8 +82,10 @@ org_repo = options.organization + "/" + options.repository
 if options.authkey == ""
 	client = Octokit::Client.new(:login => options.username, :password => options.password)
 else
-	client = Octokit::Client.new(:login => options.authkey)
+	client = Octokit::Client.new(:access_token => options.authkey)
 end
+user = client.user
+user.login
 
 csv_text = File.read(options.file)
 csv = CSV.parse(csv_text, :headers => true)
