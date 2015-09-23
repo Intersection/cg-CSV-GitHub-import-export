@@ -25,27 +25,27 @@ opts_parser = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Specific options:"
 
-  opts.on("-o", "--organization", "Define you repo's local") do |o|
+  opts.on("-o ORGANIZATION", "--organization ORGANIZATION", String, "Define you repo's local") do |o|
     options.organization = o
   end
 
-  opts.on("-r", "--repository", "Define you repo name") do |r|
+  opts.on("-r REPO", "--repository REPO", String, "Define you repo name") do |r|
     options.repository = r
   end
 
-  opts.on("-u", "--username", "Your username") do |u|
+  opts.on("-u USER", "--username USER", String, "Your username") do |u|
     options.username = u
   end
 
-  opts.on("-p", "--password", "Your password") do |u|
+  opts.on("-p PASS", "--password PASS", String, "Your password") do |u|
     options.password = u
   end
 
-  opts.on("-k", "--authkey", "Your 40 char token") do |k|
+  opts.on("-k KEY", "--authkey KEY", String, "Your 40 char token") do |k|
     options.authkey = k
   end
 
-  opts.on("-f", "--file", "CSV file") do |f|
+  opts.on("-f FILE", "--file FILE", String, "CSV file") do |f|
     options.file = f
   end
 
@@ -75,6 +75,7 @@ password = ""
 org = "" 
 repo = ""
 =end  # END HARD-CODED SECTION
+
 
 org_repo = options.organization + "/" + options.repository
 
