@@ -8,6 +8,11 @@ require 'faraday'
 require 'csv'
 require 'optparse'
 require 'ostruct'
+require 'highline/import'
+
+def password_prompt(message, mask='*')
+  ask(message) { |q| q.echo = mask}
+end
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
@@ -26,10 +31,19 @@ opts_parser = OptionParser.new do |opts|
   opts.separator "Specific options:"
 
   opts.on("-o ORGANIZATION", "--organization ORGANIZATION", String, "Define you repo's local") do |o|
+    if o == ""
+      puts options
+      exit
+    end
     options.organization = o
   end
 
   opts.on("-r REPO", "--repository REPO", String, "Define you repo name") do |r|
+    if r == ""
+      puts options
+      exit
+    end
+
     options.repository = r
   end
 
@@ -37,15 +51,15 @@ opts_parser = OptionParser.new do |opts|
     options.username = u
   end
 
-  opts.on("-p PASS", "--password PASS", String, "Your password") do |u|
-    options.password = u
-  end
-
   opts.on("-k KEY", "--authkey KEY", String, "Your 40 char token") do |k|
     options.authkey = k
   end
 
   opts.on("-f FILE", "--file FILE", String, "CSV file") do |f|
+    if f == ""
+      puts options
+      exit
+    end
     options.file = f
   end
 
@@ -59,32 +73,14 @@ opts_parser = OptionParser.new do |opts|
     exit
   end
 
-  if options.organization == "" || options.repository == "" || options.file == ""
-  	puts opts
-  	exit
-  end
-
 end
 
 opts_parser.parse!(ARGV)
-# END INTERACTIVE SECTION
-
-
-# BEGIN HARD-CODED SECTION
-# Un-comment out this section (from here down to where the end is marked) if you want to use this without any interaction
-# All of these need to be filled out in order for it to work
-=begin
-input_file = ""
-username = ""
-password = ""
-org = "" 
-repo = ""
-=end  # END HARD-CODED SECTION
-
 
 org_repo = options.organization + "/" + options.repository
 
 if options.authkey == ""
+	options.password = password_prompt('#options.username password: ')
 	client = Octokit::Client.new(:login => options.username, :password => options.password)
 else
 	client = Octokit::Client.new(:access_token => options.authkey)
@@ -98,8 +94,9 @@ csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
 	puts "Creating issue:  #{row['title']}"
 
+
 	options = {
-		:assignee => row['assignee_username'] == nil ? "none" : row['assignee_username'],
+		:assignee => row['assignee_username'],
 		:labels => []}
 
 	$i=1
@@ -107,7 +104,7 @@ csv.each do |row|
 		options.labels << row['label#$i']
 	end
 
-	client.create_issue(org_repo, row['title'], row['description'], options)  #Add or remove label columns here.
+	client.create_issue(org_repo, row['title'], row['description'], options)
 
 	puts "Imported issue:  #{row['title']}"
 end
