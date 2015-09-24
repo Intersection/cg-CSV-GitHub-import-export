@@ -59,6 +59,11 @@ opts_parser = OptionParser.new do |opts|
     exit
   end
 
+  if options.organization == "" || options.repository == "" || options.file == ""
+  	puts opts
+  	exit
+  end
+
 end
 
 opts_parser.parse!(ARGV)
@@ -92,14 +97,18 @@ csv = CSV.parse(csv_text, :headers => true)
 
 csv.each do |row|
 	puts "Creating issue:  #{row['title']}"
-	puts row['title']
-	puts row['description']
+
 	options = {
-		:assignee => row['assignee_username'], 
-		:labels => [row['label1'], row['label2']]}
-	puts options
+		:assignee => row['assignee_username'] == nil ? "none" : row['assignee_username'],
+		:labels => []}
+
+	$i=1
+	while row['label#$i'] != nil do
+		options.labels << row['label#$i']
+	end
 
 	client.create_issue(org_repo, row['title'], row['description'], options)  #Add or remove label columns here.
+
 	puts "Imported issue:  #{row['title']}"
 end
 
