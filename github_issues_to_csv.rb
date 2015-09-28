@@ -1,69 +1,103 @@
 #!/usr/bin/ruby
+# See the README for how to use this.
 
+require 'rubygems'
 require 'octokit'
+require 'faraday'
 require 'csv'
-require 'date'
+require 'optparse'
+require 'ostruct'
+require 'highline/import'
 
+def password_prompt(message, mask='*')
+  ask(message) { |q| q.echo = mask}
+end
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
 
-puts "Username:"
-USERNAME = gets.chomp  
-if USERNAME == ""
-	abort("You need to supply a username. Thank you, come again.")
+options = OpenStruct.new
+options.organization = ""
+options.repository = ""
+options.username = ""
+options.password = ""
+options.authkey = ""
+options.file = ""
+options.milestone = ""
+
+opts_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+  opts.separator ""
+  opts.separator "Specific options:"
+
+  opts.on("-o ORGANIZATION", "--organization ORGANIZATION", String, "Define you repo's local") do |o|
+    if o == ""
+      puts options
+      exit
+    end
+    options.organization = o
+  end
+
+  opts.on("-r REPO", "--repository REPO", String, "Define you repo name") do |r|
+    if r == ""
+      puts options
+      exit
+    end
+
+    options.repository = r
+  end
+
+  opts.on("-u USER", "--username USER", String, "Your username") do |u|
+    options.username = u
+  end
+
+  opts.on("-k KEY", "--authkey KEY", String, "Your 40 char token") do |k|
+    options.authkey = k
+  end
+
+  opts.on("-f FILE", "--file FILE", String, "CSV file") do |f|
+    if f == ""
+      puts options
+      exit
+    end
+    options.file = f
+  end
+
+  opts.on("-m MILESTONE", "--milestone MILESTONE", String, "Milestone Target") do |m|
+    if m == ""
+      puts options
+      exit
+    end
+    options.milestone = m
+  end
+
+  opts.separator ""
+  opts.separator "Common options:"
+
+  # No argument, shows at tail.  This will print an options summary.
+  # Try it and see!
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+
 end
 
-puts "Password:"
-PASSWORD = gets.chomp  
-if PASSWORD == ""
-	abort("You need to supply a password. Thank you, come again.")
-end
+opts_parser.parse!(ARGV)
 
-puts "Name of the file you want to create? (.csv will be appended automatically)"
-OUTPUT_FILE = gets.chomp  
-if OUTPUT_FILE == ""
-	abort("You need to supply a CSV file. Thank you, come again.")
-end
-
-puts "Organization?"
-ORG = gets.chomp  
-if ORG == ""
-	abort("You need to supply an organization. Thank you, come again.")
-end
-
-puts "Repository?"
-REPO = gets.chomp  
-if REPO == ""
-	abort("You need to supply a repository. Thank you, come again.")
-end
-
-puts "Do you want just one Milestone? If so, enter it now. Leave this blank to get the entire repo."
-TARGET_MILESTONE = gets.chomp  
-
-# END INTERACTIVE SECTION
-
-
-# BEGIN HARD-CODED SECTION
-# Un-comment out this section (from here down to where the end is marked) if you want to use this without any interaction
-# All of these need to be filled out in order for it to work
-=begin
-OUTPUT_FILE = ""
-USERNAME = ""   # Put your GitHub username inside the quotes
-PASSWORD = ""   # Put your GitHub password inside the quotes 
-ORG = ""        # Put your organization (or username if you have no org) name here
-REPO = ""       # Put the repository name here
-# Want to only get a single milestone? Put the milestone name in here:
-TARGET_MILESTONE="" # keep this equal to "" if you want all milestones
-=end  # END HARD-CODED SECTION
-
-
-# Your local timezone offset to convert times
 TIMEZONE_OFFSET="-4"
+org_repo = options.organization + "/" + options.repository
+
+if options.authkey == ""
+  options.password = password_prompt('#{options.username} password: ')
+  client = Octokit::Client.new(:login => options.username, :password => options.password)
+else
+  client = Octokit::Client.new(:access_token => options.authkey)
+end
+user = client.user
+user.login
  
-client = Octokit::Client.new(:login => USERNAME, :password => PASSWORD)
- 
-csv = CSV.new(File.open(File.dirname(__FILE__) + "/" + OUTPUT_FILE + ".csv", 'w'))
+csv = CSV.new(File.open(File.dirname(__FILE__) + "/" + options.file + ".csv", 'w', {:col_sep => ";"}))
  
 puts "Initialising CSV file..."
 #CSV Headers
@@ -88,14 +122,14 @@ issues = []
 page = 0
 begin
 	page = page +1
-	temp_issues = client.list_issues("#{ORG}/#{REPO}", :state => "closed", :page => page)
+	temp_issues = client.list_issues("#{options.organization}/#{options.repository}", :state => "closed", :page => page)
 	issues = issues + temp_issues;
 end while not temp_issues.empty?
 temp_issues = []
 page = 0
 begin
 	page = page +1
-	temp_issues = client.list_issues("#{ORG}/#{REPO}", :state => "open", :page => page)
+	temp_issues = client.list_issues("#{options.organization}/#{options.repository}", :state => "open", :page => page)
 	issues = issues + temp_issues;
 end while not temp_issues.empty?
  
@@ -121,7 +155,7 @@ issues.each do |issue|
 		milestone = milestone['title']
 	end
  
-	if ((TARGET_MILESTONE == "") || (milestone == TARGET_MILESTONE))
+	if ((options.milestone == "") || (milestone == options.milestone))
     # Needs to match the header order above, date format are based on Jira default
     row = [
       issue['number'],
