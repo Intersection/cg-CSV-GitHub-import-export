@@ -2,7 +2,10 @@ Import-issues-to-GitHub-from-CSV
 ================================
 
 ###Caveat
-**You should use two-factor authentication for git**. 2FA breaks this script (it's beyond my coding skills to overcome that, at the moment). You have been warned.
+**You should use two-factor authentication for git**. Unfortunately, 2FA breaks this script and it's beyond my coding/Ruby skills to overcome that. You have been warned.
+
+###Abandoned code
+At the moment I have no plans to update this code. It did what I needed at the time. To my absolute _amazement_, people who are noticeably better programmers than I have forked this project! If you are hoping to get new features, my best suggestion is that you contact one of the peole who have forked this repo. BTW, there's already a list of features to add, created by the incomparable https://github.com/dnewman108 here: https://github.com/controlgroup/CSV-GitHub-import-export/blob/master/Features_to_add.md
 
 ###Intro (WTF is this?)
 Product Owners and Project Mangers _love_ spreadsheets! They want everything in spreadsheet form.
@@ -13,7 +16,7 @@ Thus this repo.
 
 There are two scripts here. One is for importing into GitHub Issues from a CSV file. The other is for getting issues out of GitHub and into a CSV file. 
 
-NOTE: currently, if you have two-factor authentication on, you'll have to turn it off for this to work. Which is a pain.
+NOTE: currently, if you have two-factor authentication on, you'll have to turn it off for this to work. Which is a pain and not terribly secure.
 
 ###Documentation (The stuff you actually care about)
 
