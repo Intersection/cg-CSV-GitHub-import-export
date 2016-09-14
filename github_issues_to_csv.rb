@@ -3,6 +3,7 @@
 require 'octokit'
 require 'csv'
 require 'date'
+require 'highline/import'
 
 
 # BEGIN INTERACTIVE SECTION
@@ -14,8 +15,7 @@ if USERNAME == ""
 	abort("You need to supply a username. Thank you, come again.")
 end
 
-puts "Password:"
-PASSWORD = gets.chomp
+PASSWORD = ask("Password:  ") { |q| q.echo = false }.chomp
 if PASSWORD == ""
 	abort("You need to supply a password. Thank you, come again.")
 end

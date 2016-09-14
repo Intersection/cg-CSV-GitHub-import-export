@@ -6,6 +6,7 @@ require 'rubygems'
 require 'octokit'
 require 'faraday'
 require 'csv'
+require 'highline/import'
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
@@ -16,8 +17,7 @@ if username == ""
 	abort("You need to supply a username. Thank you, come again.")
 end
 
-puts "Password:"
-password = gets.chomp
+password = ask("Password:  ") { |q| q.echo = false }.chomp
 if password == ""
 	abort("You need to supply a password. Thank you, come again.")
 end
