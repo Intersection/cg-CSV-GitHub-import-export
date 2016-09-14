@@ -16,12 +16,21 @@ NOTE: currently, if you have two-factor authentication on, you'll have to turn i
 
 # Getting Started
 
+## Github Access
 Make sure you have a GitHub account, that you know your username and password, and that you have access to the repository (repo) that you want to import to, or from which you wish to export.
 
 You can use the "Clone in Desktop" or "Download Zip" functions on the GitHub page to download the files. If you want to do it using the command line, via ssh, use `git clone git@github.com:controlgroup/CSV-GitHub-import-export.git`
 
+## Installation
+This utility is setup to specify a ruby version and create a gemset. It works with RVM. If you use something else make sure it uses the right Ruby and gets the gems installed. (If that requires changes, please send a pull request).
 
-You will also need to install [octokit](https://github.com/octokit/octokit.rb).
+When you `cd` into this project, RVM will set ruby to 2.3.1 and create a gemset named `csv_github_import_export`.
+
+To get the gems you need installed, do:
+```
+$ gem install bundler --no-ri --no-rdoc
+$ bundle install
+```
 
 # Importing issues from a CSV file into GitHub using csv_issues_to_github.rb
 
