@@ -44,10 +44,7 @@ You will also need to provide it your GitHub username, your GitHub password, the
 The CSV file MUST be in the following format:
 `title,description,assignee_username,label1,label2,label3`
 
-You can add more labels or remove labels to it if you wish. However...
-
-_**Important note**_: all label fields need to be filled. So, if you know you have an issue with only one label, then you need to have only one label field. You do this by removing (or you can add) labels fields at the end of the script. The line for this is marked with a comment (currently it's line 66, but that could change.)
-This is a known deficiency that will, with luck, eventually be fixed.
+It's fine to leave label fields blank. The code will skip over blank labels.
 
 Fields that have commas in them need to be in double quotes. (Some punctuation doesn't require this, other punctuation may.)
 
