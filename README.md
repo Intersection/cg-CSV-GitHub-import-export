@@ -51,9 +51,6 @@ This is a known deficiency that will, with luck, eventually be fixed.
 
 Fields that have commas in them need to be in double quotes. (Some punctuation doesn't require this, other punctuation may.)
 
-Either way you use this, you will have to provide your GH password. If you use it interactively, it will show your password on the command line. P-(
-
-
 # Exporting issues from GitHub to a CSV file using github_issues_to_csv.rb
 
 `./github_issues_to_csv.rb` to export issues *from* GitHub into a CSV
