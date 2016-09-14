@@ -61,13 +61,30 @@ org_repo = org + "/" + repo
 
 client = Octokit::Client.new(:login => username, :password => password)
 
-csv = CSV.parse(csv_text, :headers => true)
-csv_text = File.read(full_path)
+count = 0
+skipped = 0
 
-csv.each do |row|
-	client.create_issue(org_repo, row['title'], row['description'], options = {
-		:assignee => row['assignee_username'],
-		:labels => [row['label1'],row['label2'],row['label3']]})  #Add or remove label columns here.
-	puts "Imported issue:  #{row['title']}"
+CSV.foreach(full_path, headers: true) do |row|
+  count += 1
+
+  if row['title'] == ""
+    skipped += 1
+    next
+  end
+
+  puts "Importing issue: #{row['title']}: #{row['description']}"
+  options = {labels: []}
+
+  unless row['assignee_username'] == ""
+    options[:assignee] = row['assignee_username']
+  end
+
+  1.upto(3) do |i|
+    if row["label#{i}"] != "" && !row["label#{i}"].nil?
+      options[:labels] << row["label#{i}"]
+    end
+  end
+
+	client.create_issue(org_repo, row['title'], row['description'], options)
 end
-
+puts "Import completed. Processed #{count} issues. Skipped #{skipped}."
