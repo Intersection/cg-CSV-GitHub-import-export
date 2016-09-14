@@ -7,6 +7,7 @@ require 'octokit'
 require 'faraday'
 require 'csv'
 require 'highline/import'
+require 'pathname'
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
@@ -27,6 +28,8 @@ input_file = gets.chomp
 if input_file == ""
 	abort("You need to supply a CSV file. Thank you, come again.")
 end
+full_path = Pathname.new(input_file).expand_path
+abort("Can't find file at that location: #{full_path}") unless full_path.exist?
 
 puts "Organization?"
 org = gets.chomp
@@ -47,9 +50,9 @@ end
 # Un-comment out this section (from here down to where the end is marked) if you want to use this without any interaction
 # All of these need to be filled out in order for it to work
 =begin
-input_file = ""
 username = ""
 password = ""
+full_path = Pathname.new('/path/to/your.csv').expand_path
 org = ""
 repo = ""
 =end  # END HARD-CODED SECTION
@@ -58,8 +61,8 @@ org_repo = org + "/" + repo
 
 client = Octokit::Client.new(:login => username, :password => password)
 
-csv_text = File.read(input_file)
 csv = CSV.parse(csv_text, :headers => true)
+csv_text = File.read(full_path)
 
 csv.each do |row|
 	client.create_issue(org_repo, row['title'], row['description'], options = {
