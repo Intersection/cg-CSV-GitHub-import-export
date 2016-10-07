@@ -6,65 +6,106 @@ require 'rubygems'
 require 'octokit'
 require 'faraday'
 require 'csv'
+require 'optparse'
+require 'ostruct'
+require 'highline/import'
+
+def password_prompt(message, mask='*')
+  ask(message) { |q| q.echo = mask}
+end
 
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
 
-puts "Username:"
-username = gets.chomp  
-if username == ""
-	abort("You need to supply a username. Thank you, come again.")
+options = OpenStruct.new
+options.organization = ""
+options.repository = ""
+options.username = ""
+options.password = ""
+options.authkey = ""
+options.file = ""
+
+opts_parser = OptionParser.new do |opts|
+  opts.banner = "Usage: example.rb [options]"
+  opts.separator ""
+  opts.separator "Specific options:"
+
+  opts.on("-o ORGANIZATION", "--organization ORGANIZATION", String, "Define you repo's local") do |o|
+    if o == ""
+      puts options
+      exit
+    end
+    options.organization = o
+  end
+
+  opts.on("-r REPO", "--repository REPO", String, "Define you repo name") do |r|
+    if r == ""
+      puts options
+      exit
+    end
+
+    options.repository = r
+  end
+
+  opts.on("-u USER", "--username USER", String, "Your username") do |u|
+    options.username = u
+  end
+
+  opts.on("-k KEY", "--authkey KEY", String, "Your 40 char token") do |k|
+    options.authkey = k
+  end
+
+  opts.on("-f FILE", "--file FILE", String, "CSV file") do |f|
+    if f == ""
+      puts options
+      exit
+    end
+    options.file = f
+  end
+
+  opts.separator ""
+  opts.separator "Common options:"
+
+  # No argument, shows at tail.  This will print an options summary.
+  # Try it and see!
+  opts.on_tail("-h", "--help", "Show this message") do
+    puts opts
+    exit
+  end
+
 end
 
-puts "Password:"
-password = gets.chomp  
-if password == ""
-	abort("You need to supply a password. Thank you, come again.")
+opts_parser.parse!(ARGV)
+
+org_repo = options.organization + "/" + options.repository
+
+if options.authkey == ""
+	options.password = password_prompt('#options.username password: ')
+	client = Octokit::Client.new(:login => options.username, :password => options.password)
+else
+	client = Octokit::Client.new(:access_token => options.authkey)
 end
+user = client.user
+user.login
 
-puts "Path for the CSV file you want to use?"
-input_file = gets.chomp  
-if input_file == ""
-	abort("You need to supply a CSV file. Thank you, come again.")
-end
-
-puts "Organization?"
-org = gets.chomp  
-if org == ""
-	abort("You need to supply an organization. Thank you, come again.")
-end
-
-puts "Repository?"
-repo = gets.chomp  
-if repo == ""
-	abort("You need to supply a repository. Thank you, come again.")
-end
-
-# END INTERACTIVE SECTION
-
-
-# BEGIN HARD-CODED SECTION
-# Un-comment out this section (from here down to where the end is marked) if you want to use this without any interaction
-# All of these need to be filled out in order for it to work
-=begin
-input_file = ""
-username = ""
-password = ""
-org = "" 
-repo = ""
-=end  # END HARD-CODED SECTION
-
-org_repo = org + "/" + repo
-
-client = Octokit::Client.new(:login => username, :password => password)
-
-csv_text = File.read(input_file)
+csv_text = File.read(options.file)
 csv = CSV.parse(csv_text, :headers => true)
 
 csv.each do |row|
-	client.create_issue(org_repo, row['title'], row['description'], options = {
-		:assignee => row['assignee_username'], 
-		:labels => [row['label1'],row['label2'],row['label3']]})  #Add or remove label columns here.
+	puts "Creating issue:  #{row['title']}"
+
+
+	options = {
+		:assignee => row['assignee_username'],
+		:labels => []}
+
+	$i=1
+	while row['label#$i'] != nil do
+		options.labels << row['label#$i']
+	end
+
+	client.create_issue(org_repo, row['title'], row['description'], options)
+
 	puts "Imported issue:  #{row['title']}"
 end
 
