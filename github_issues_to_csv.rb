@@ -49,12 +49,12 @@ TARGET_MILESTONE = gets.chomp
 # All of these need to be filled out in order for it to work
 =begin
 OUTPUT_FILE = ""
-USERNAME = ""   # Put your GitHub username inside the quotes
-PASSWORD = ""   # Put your GitHub password inside the quotes 
-ORG = ""        # Put your organization (or username if you have no org) name here
-REPO = ""       # Put the repository name here
+USERNAME = "srinivasarv"   # Put your GitHub username inside the quotes
+PASSWORD = "vmoksha13"   # Put your GitHub password inside the quotes 
+ORG = "srinivasarv"        # Put your organization (or username if you have no org) name here
+REPO = "BioMag.Mobile.Practitioner"       # Put the repository name here
 # Want to only get a single milestone? Put the milestone name in here:
-TARGET_MILESTONE="" # keep this equal to "" if you want all milestones
+TARGET_MILESTONE="Released for QA Team Internal Testing - App Version 5.3.6" # keep this equal to "" if you want all milestones
 =end  # END HARD-CODED SECTION
 
 
