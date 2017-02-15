@@ -6,7 +6,7 @@ require 'rubygems'
 require 'octokit'
 require 'faraday'
 require 'csv'
-
+require 'highline/import'
 # BEGIN INTERACTIVE SECTION
 # Comment out this section (from here down to where the end is marked) if you want to use this interactively
 
@@ -16,8 +16,7 @@ if username == ""
 	abort("You need to supply a username. Thank you, come again.")
 end
 
-puts "Password:"
-password = gets.chomp  
+password = ask("Password:  ") { |q| q.echo = "*" }
 if password == ""
 	abort("You need to supply a password. Thank you, come again.")
 end
@@ -64,7 +63,7 @@ csv = CSV.parse(csv_text, :headers => true)
 csv.each do |row|
 	client.create_issue(org_repo, row['title'], row['description'], options = {
 		:assignee => row['assignee_username'], 
-		:labels => [row['label1'],row['label2'],row['label3']]})  #Add or remove label columns here.
+		:labels => [row['label1'],row['label2'],row['label3'],row['label4'],row['label5']]})  #Add or remove label columns here.
 	puts "Imported issue:  #{row['title']}"
 end
 
