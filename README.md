@@ -1,13 +1,13 @@
 Import-issues-to-GitHub-from-CSV
 ================================
 
-###Caveat
+### Caveat
 **You should use two-factor authentication for git**. Unfortunately, 2FA breaks this script and it's beyond my coding/Ruby skills to overcome that. You have been warned.
 
-###Abandoned code
+### Abandoned code
 At the moment I have no plans to update this code. It did what I needed at the time. To my absolute _amazement_, people who are noticeably better programmers than I have forked this project! If you are hoping to get new features, my best suggestion is that you contact one of the peole who have forked this repo. BTW, there's already a list of features to add, created by the incomparable https://github.com/dnewman108 here: https://github.com/controlgroup/CSV-GitHub-import-export/blob/master/Features_to_add.md
 
-###Intro (WTF is this?)
+### Intro (WTF is this?)
 Product Owners and Project Mangers _love_ spreadsheets! They want everything in spreadsheet form.
 
 If you're using GitHub Issues (and we do) this means that one often needs to move things from GitHub into a spreadsheet ("I need a list of issues to show the client"), or from a spreadsheet into GitHub ("Here is the list of features we are committing to this sprint.") And, personally, I don't like doing things by hand if a computer can do them. And do them better.
@@ -18,9 +18,9 @@ There are two scripts here. One is for importing into GitHub Issues from a CSV f
 
 NOTE: currently, if you have two-factor authentication on, you'll have to turn it off for this to work. Which is a pain and not terribly secure.
 
-###Documentation (The stuff you actually care about)
+### Documentation (The stuff you actually care about)
 
-#####Getting Started
+##### Getting Started
 
 Make sure you have a GitHub account, that you know your username and password, and that you have access to the repository (repo) that you want to import to, or from which you wish to export.
 
@@ -30,7 +30,7 @@ You will also need to install [octokit](https://github.com/octokit/octokit.rb).
 
 
 
-#####Importing issues from a CSV file into GitHub using csv_issues_to_github.rb
+##### Importing issues from a CSV file into GitHub using csv_issues_to_github.rb
 
 `./csv_issues_to_github.rb` to import issues *into* GitHub from a CSV
 
@@ -52,7 +52,7 @@ Fields that have commas in them need to be in double quotes. (Some punctuation d
 Either way you use this, you will have to provide your GH password. If you use it interactively, it will show your password on the command line. P-(
 
 
-#####Exporting issues from GitHub to a CSV file using github_issues_to_csv.rb
+##### Exporting issues from GitHub to a CSV file using github_issues_to_csv.rb
 
 `./github_issues_to_csv.rb` to export issues *from* GitHub into a CSV
 
@@ -63,7 +63,7 @@ You can also export only a specific milestone if you give it a milestone. If you
 Note: It will put all labels in one column, without any delimiter. P-(
 
 
-###Credits (The smart people who did the real work)
+### Credits (The smart people who did the real work)
 It should be noted that I'm not much of a programmer, and I got a tremendous amount of help from [Vik](https://github.com/datvikash) and [Evan](https://github.com/evan108108)
 
 In addition `github_issues_to_csv` was adapted from the work of others, specifically: https://gist.github.com/henare/1106008 and https://gist.github.com/tkarpinski/2369729
